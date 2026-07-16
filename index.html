@@ -374,7 +374,8 @@
                     <li><strong>Source filter:</strong> IPv4 ranges</li>
                     <li><strong>Source IPv4 ranges:</strong> 0.0.0.0/0</li>
                     <li><strong>Protocols and ports:</strong> "Specified protocols and ports" ကို အမှန်ခြစ်ပါ။</li>
-                    <li>TCP ကို အမှန်ခြစ်ပြီး ဘေးက ကွက်လပ်ထဲတွင် <strong>80, 443, 2053, 8080</strong> ဟု ရိုက်ထည့်ပါ။</li>
+                    <li>TCP ကို အမှန်ခြစ်ပြီး ဘေးက ကွက်လပ်ထဲတွင် <strong>80, 443, 2053, 8080, 2096, 30000-50000</strong> ဟု ရိုက်ထည့်ပါ။</li>
+                    <li>UDP ကို အမှန်ခြစ်ပြီး ဘေးက ကွက်လပ်ထဲတွင် <strong>30000-50000</strong> ဟု ရိုက်ထည့်ပါ။</li>
                 </ul>
                 <div class="note-box">
                     <strong>ရှင်းလင်းချက်:</strong> 80/443 သည် SSL လက်မှတ်အတွက်၊ 2053 သည် 3X-UI Panel အတွက်၊ 8080 သည် VPN Key အတွက် ဖြစ်ပါသည်။ အားလုံးဖြည့်ပြီးပါက အောက်ဆုံးရှိ "Create" ခလုတ်ကို နှိပ်ပါ။
@@ -457,6 +458,48 @@
                         <li><strong>Host:</strong> နေရာတွင် မိမိ၏ subdomain <code><span class="dyn-var var-domain">vpn.example.com</span></code> ကို ထည့်ပါ။</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="section" id="sec-5">
+                <div class="section-header"><h2>(၆) Panel Setting ပြင်ဆင်ခြင်း (Outline)</h2></div>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">
+                    Panel ၏ ဘယ်ဘက် ဘေးဘား (Left Sidebar) ရှိ "Inbounds" ဆိုသည့်နေရာကို နှိပ်ပါ။
+                </p>
+
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Basics Tab တွင် ပြင်ရန်</h3>
+                    <ul class="step-list">
+                        <li><strong>Remark:</strong> Outline (မိမိမှတ်မိမည့်အမည် ပေးနိုင်ပါသည်)</li>
+                        <li><strong>Protocol:</strong> shadowsocks ကို ရွေးပါ။</li>
+                        <li><strong>Port:</strong> 41234 (လုံခြုံရေးအတွက် 30000 နဲ့ 50000 ကြားက Port တစ်ခုကို သုံးထားတာပါ။)</li>
+                        <li><strong>Total Flow (GB):</strong> ဗလာ (ဘာမှမထည့်ဘဲ) ထားလိုက်ပါ။</li>
+                        <li><strong>Expiry Date:</strong> ဗလာ ထားလိုက်ပါ။</li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Stream Tab တွင် ပြင်ရန်</h3>
+                    <ul class="step-list">
+                        <li><strong>Transmission:</strong> RAW (raw ပဲထားပေးပါ)</li>
+                        <li><strong>Proxy Protocol:</strong>  အားလုံးကို ပိတ် (Disable / Off) ထားပါ။</li>
+                        <li><strong>HTTP Obfuscation:</strong> အားလုံးကို ပိတ် (Disable / Off) ထားပါ။</li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Security Tab တွင် ပြင်ရန်</h3>
+                    <ul class="step-list">
+                        <li><strong>Security:</strong> None ကိုပဲ ရွေးထားပါ။ (Shadowsocks က သူ့ဘာသာ Encryption လုပ်ပြီးသားဖြစ်လို့ သီးသန့် TLS/Reality တွေ ထပ်ခံစရာ မလိုပါဘူး။) </li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Sniffing Tab တွင် ပြင်ရန်</h3>
+                    <ul class="step-list">
+                        <li><strong>Enabled:</strong> ဖွင့် (On/Enable) လိုက်ပါ။</li>
+                    </ul>
+                </div>
+
             </div>
 
         </main>

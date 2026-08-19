@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3X-Ui Panel Setup Master Guide</title>
+    <title>3X-Ui VPN Server ထောင်နည်း</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* Modern Dark Theme Variables */
         :root {
-            --bg-body: #050505;
-            --bg-card: rgba(20, 20, 20, 0.6);
-            --bg-input: #0a0a0a;
+            --bg-body: #030303;
+            --bg-card: rgba(15, 15, 15, 0.65);
+            --bg-input: rgba(0, 0, 0, 0.5);
             --bg-cmd: #000000;
-            --bg-cmd-header: #111111;
+            --bg-cmd-header: #0d0d0d;
             
-            --border-color: #2a2a2a;
-            --border-glow: rgba(0, 242, 254, 0.3);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 242, 254, 0.4);
             
-            --text-main: #ededed;
-            --text-muted: #a1a1aa;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
             
             --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             --accent-cyan: #00f2fe;
@@ -35,51 +35,84 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; border: 2px solid #000; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
         body {
             background-color: var(--bg-body);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.04) 0%, transparent 50%);
             color: var(--text-main);
             font-family: var(--font-text);
             line-height: 1.8;
             padding-bottom: 100px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Ambient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200vw; height: 200vh;
+            background-image: 
+                radial-gradient(circle at 30% 50%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 70% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+            animation: rotateAmbient 40s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes rotateAmbient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Hero Header */
         header {
             text-align: center;
-            padding: 5rem 1rem 4rem;
+            padding: 6rem 1rem 4rem;
             position: relative;
             overflow: hidden;
             border-bottom: 1px solid var(--border-color);
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(12px);
+            background: linear-gradient(180deg, rgba(10,10,10,0.8) 0%, rgba(3,3,3,0.9) 100%);
+            backdrop-filter: blur(20px);
             margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .logo-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
+            font-size: 4rem;
+            margin-bottom: 1rem;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.4));
+            filter: drop-shadow(0 10px 20px rgba(0, 242, 254, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         header h1 { 
-            font-size: 2.2rem; 
+            font-size: 2.5rem; 
             letter-spacing: -0.5px; 
             font-weight: 700;
             margin-bottom: 10px;
             color: #ffffff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
         
         header p { 
-            color: var(--text-muted); 
+            color: var(--accent-cyan); 
             font-size: 1.1rem; 
             font-weight: 500;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         /* Layout Container */
@@ -92,36 +125,53 @@
         /* Smart Input Panel */
         .config-panel {
             background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
         
-        .config-panel:hover {
-            border-color: var(--border-glow);
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+        .config-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: var(--accent-gradient);
+            opacity: 0.5;
+            transition: opacity 0.4s;
         }
+
+        .config-panel:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 40px rgba(0, 242, 254, 0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .config-panel:hover::before { opacity: 1; }
 
         .config-panel h3 {
             color: #fff;
             margin-bottom: 10px;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             display: flex;
             align-items: center;
             gap: 12px;
         }
         
-        .config-panel h3 i { color: var(--accent-cyan); }
+        .config-panel h3 i { 
+            color: var(--accent-cyan);
+            filter: drop-shadow(0 0 10px var(--accent-cyan));
+        }
 
         .input-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            gap: 25px;
+            margin-top: 25px;
         }
         .input-group { display: flex; flex-direction: column; }
         .input-group label {
@@ -130,83 +180,111 @@
             margin-bottom: 8px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
         .input-group input {
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-cyan);
             font-family: var(--font-code);
-            padding: 12px 16px;
-            font-size: 0.9rem;
-            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 0.95rem;
+            border-radius: 12px;
             outline: none;
             transition: all 0.3s;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
         .input-group input:focus {
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 0 1px var(--accent-cyan), inset 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 0 0 1px var(--accent-cyan), 0 0 15px rgba(0, 242, 254, 0.2), inset 0 2px 4px rgba(0,0,0,0.5);
+            background: rgba(0, 242, 254, 0.02);
         }
 
         /* Section Styling */
         .section {
-            margin-bottom: 3.5rem;
-            animation: fadeIn 0.6s ease-out forwards;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
             transform: translateY(20px);
         }
 
         .section-header {
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border-color);
+            position: relative;
         }
         .section-header h2 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: #ffffff;
             font-weight: 700;
             display: flex;
             align-items: center;
+            letter-spacing: -0.3px;
         }
         
         .step-list { list-style: none; margin-bottom: 25px; }
         .step-list li {
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             color: var(--text-muted);
-            padding-left: 20px;
+            padding-left: 24px;
             position: relative;
+            transition: transform 0.2s, color 0.2s;
+        }
+        .step-list li:hover {
+            color: var(--text-main);
+            transform: translateX(4px);
         }
         .step-list li::before {
-            content: '▹';
+            content: '\f105'; /* FontAwesome angle-right */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             position: absolute;
             left: 0;
+            top: 2px;
             color: var(--accent-cyan);
-            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Inline Code Styling (Important for commands inside text) */
+        code:not(.cmd-code) {
+            background: rgba(255,255,255,0.08);
+            color: var(--accent-cyan);
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         .note-box {
-            background: rgba(16, 185, 129, 0.05);
-            border-left: 3px solid var(--accent-green);
-            padding: 12px 16px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.02) 100%);
+            border-left: 4px solid var(--accent-green);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
             font-size: 0.95rem;
             color: #d1d5db;
+            backdrop-filter: blur(10px);
         }
 
         /* Terminal Box */
         .cmd-box {
             background: var(--bg-cmd);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             margin-bottom: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: border-color 0.3s;
+        }
+        .cmd-box:hover {
+            border-color: rgba(255,255,255,0.2);
         }
         .cmd-box-header {
             background: var(--bg-cmd-header);
-            padding: 12px 16px;
+            padding: 14px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -218,7 +296,7 @@
             gap: 8px;
             align-items: center;
         }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot { width: 13px; height: 13px; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.3); }
         .dot-red { background: #ff5f56; }
         .dot-yellow { background: #ffbd2e; }
         .dot-green { background: #27c93f; }
@@ -231,44 +309,46 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            opacity: 0.7;
         }
 
         .btn-copy-all {
             background: rgba(255,255,255,0.05);
             color: var(--text-main);
             border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .btn-copy-all:hover {
-            background: var(--accent-cyan);
-            color: #000;
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--accent-cyan);
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
         }
 
         .cmd-list { display: flex; flex-direction: column; }
         .cmd-item {
             display: flex;
             align-items: stretch;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
             position: relative;
+            transition: background 0.2s;
         }
         .cmd-item:last-child { border-bottom: none; }
-        .cmd-item:hover { background: rgba(255,255,255,0.03); }
+        .cmd-item:hover { background: rgba(255,255,255,0.02); }
         
         .cmd-code {
             flex-grow: 1;
-            padding: 16px 20px;
+            padding: 18px 24px;
             font-family: var(--font-code);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #e2e8f0;
             white-space: pre-wrap;
             word-break: break-all;
@@ -279,9 +359,10 @@
             background: transparent;
             color: var(--text-muted);
             border: none;
-            width: 50px;
+            border-left: 1px solid transparent;
+            width: 60px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -289,15 +370,44 @@
             opacity: 0;
         }
         
-        .cmd-item:hover .btn-copy-line { opacity: 1; }
-        .btn-copy-line:hover { color: var(--accent-cyan); background: rgba(255,255,255,0.05); }
-        .copied { color: var(--accent-green) !important; font-weight: bold; opacity: 1 !important; }
+        .cmd-item:hover .btn-copy-line { 
+            opacity: 1; 
+            border-left-color: rgba(255,255,255,0.05);
+        }
+        .btn-copy-line:hover { 
+            color: var(--accent-cyan); 
+            background: rgba(0, 242, 254, 0.05); 
+        }
+        .copied { 
+            color: var(--accent-green) !important; 
+            font-weight: bold; 
+            opacity: 1 !important; 
+            background: rgba(16, 185, 129, 0.05) !important;
+        }
 
         /* Dynamic Variable Styling */
         .dyn-var { 
             color: var(--accent-orange); 
-            font-weight: bold; 
-            text-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+            font-weight: 700; 
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Sub-sections (Glass Panels) */
+        .glass-panel {
+            background: rgba(255,255,255,0.015); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px; 
+            padding: 25px; 
+            margin-bottom: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .glass-panel:hover {
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.025); 
         }
 
         /* Animations */
@@ -309,10 +419,14 @@
         .section:nth-child(3) { animation-delay: 0.2s; }
         .section:nth-child(4) { animation-delay: 0.3s; }
         .section:nth-child(5) { animation-delay: 0.4s; }
+        .section:nth-child(6) { animation-delay: 0.5s; }
 
         @media (max-width: 768px) {
             .cmd-title { display: none; }
-            .btn-copy-line { opacity: 1; }
+            .btn-copy-line { opacity: 1; border-left-color: rgba(255,255,255,0.05); }
+            header { padding: 4rem 1rem 3rem; }
+            header h1 { font-size: 1.8rem; }
+            .config-panel { padding: 20px; }
         }
     </style>
 </head>
@@ -320,7 +434,7 @@
 
     <header>
         <div class="logo-icon"><i class="fas fa-shield-alt"></i> <i class="fas fa-server"></i></div>
-        <h1>3X-Ui Panel Setup Master Guide</h1>
+        <h1>3X-Ui VPN Server ထောင်နည်း</h1>
         <p>VLESS &bull; XTLS &bull; HTTPUpgrade &bull; Xray</p>
     </header>
 
@@ -328,7 +442,7 @@
         
         <div class="config-panel">
             <h3><i class="fas fa-bolt"></i> Auto Configurator</h3>
-            <p style="font-size:0.9rem; color: var(--text-muted); margin-bottom: 10px;">သင့် Data များဖြည့်လိုက်သည်နှင့် အောက်ပါ Command များအားလုံး Auto ပြောင်းလဲသွားပါမည်။</p>
+            <p style="font-size:0.95rem; color: var(--text-muted); margin-bottom: 15px;">သင့် Data များဖြည့်လိုက်သည်နှင့် အောက်ပါ Command များအားလုံး Auto ပြောင်းလဲသွားပါမည်။</p>
             
             <div class="input-grid">
                 <div class="input-group">
@@ -384,7 +498,7 @@
 
             <div class="section" id="sec-4">
                 <div class="section-header"><h2>(၄) 3X-Ui Install လုပ်ခြင်း</h2></div>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">
+                <p style="color: var(--text-muted); margin-bottom: 20px;">
                     VPS Server ကို Terminal ဖြင့်ချိတ်ဆက်ပါ။ ထို့နောက် အောက်ပါ Command များကို တစ်ကြောင်းချင်းစီ ရိုက်ထည့်ပါ။
                 </p>
 
@@ -419,17 +533,17 @@
                 </div>
 
                 <ul class="step-list" style="margin-top: 25px;">
-                    <li><strong>Would you like to customize the panel settings? (y/n)</strong> လို့မေးရင် <code>y</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
-                    <li><strong>Please set up your username:</strong> လို့မေးရင် မိမိသုံးမယ့် Username အသစ် ရိုက်ပြီး Enter နှိပ်ပါ။</li>
-                    <li><strong>Please set up your password:</strong> လို့မေးရင် မိမိသုံးမယ့် Password အသစ် ရိုက်ပြီး Enter နှိပ်ပါ။ (ရိုက်နေရင် စာလုံးပေါ်မှာမဟုတ်ပါ)</li>
-                    <li><strong>Please set up the panel port:</strong> လို့မေးရင် ရှေ့မှာဖွင့်ခဲ့တဲ့ <code>2053</code> ကို ရိုက်ပြီး Enter နှိပ်ပါ။</li>
-                    <li><strong>Choose SSL certificate setup method:</strong> (ရွေးချယ်စရာ ၄ ခု ပေါ်လာပါမည်။) <code>1</code> ဟု ရိုက်ထည့်ပြီး Enter ခေါက်ပါ။</li>
-                    <li><strong>Please enter your domain name:</strong> ဟု မေးလာပါက အဆင့် (၁) တွင် Cloudflare ၌ ပြုလုပ်ခဲ့သော Subdomain အတိအကျ <code><span class="dyn-var var-domain">vpn.example.com</span></code> ကို ရိုက်ထည့်ပါ။</li>
-                    <li><strong>Please enter your email:</strong> ဟု မေးလာပါက မိမိအသုံးပြုနေသော အီးမေးလ်တစ်ခုခု ကို ရိုက်ထည့်ပြီး Enter ခေါက်ပါ။ (Certificate သက်တမ်းတိုးရန်အတွက်သာ ဖြစ်ပါသည်)</li>
-                    <li><strong>Do you want to setup CA domain... [y/n]:</strong> ဟု ထပ်မေးလာပါက <code>n</code> ဟုသာ ရိုက်ပြီး Enter ခေါက်ပါ။</li>
-                    <li><strong>Please choose which port to use (default is 80):</strong> <code>80</code> လို့ ရိုက်ထည့်ပြီး Enter ခေါက်ပါ (သို့မဟုတ် ဘာမှမရိုက်ဘဲ Enter အလွတ် ခေါက်ချလိုက်ပါ)။</li>
-                    <li><strong>Would you like to modify --reloadcmd for ACME? (y/n):</strong> <code>n</code> လို့ ရိုက်ပြီး Enter သာ ခေါက်လိုက်ပါ။</li>
-                    <li><strong>Would you like to set this certificate for the panel? (y/n):</strong> နေရာမှာ <code>y</code> ဟု ရိုက်ထည့်ပြီး Enter ခေါက်ပေးပါ။</li>
+                    <li><strong>SQLite နှင့် PostgreSQL Database</strong> ရွေးခိုင်းရင် <code>1</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Would you like to customize the Panel Port settings?</strong> ရွေးခိုင်းရင် <code>y</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Please set up the panel port:</strong> ရွေးခိုင်းရင် <code>2053</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Choose SSL certificate setup method:</strong> ရွေးခိုင်းရင် <code>1</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Please enter your domain name:</strong> ရွေးခိုင်းရင် <code>sub.customdomain.com</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Please choose which port to use (default is 80):</strong> ရွေးခိုင်းရင် <code>80</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Would you like to modify --reloadcmd for ACME? (y/n):</strong> ရွေးခိုင်းရင် <code>n</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Would you like to set this certificate for the panel?</strong> ရွေးခိုင်းရင် <code>y</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Pannel Menu </strong> ပြန်ဖော်ချင်ရင် <code>x-ui</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Pannel URL Link </strong> ကြည့်ချင်ရင် <code>11</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
+                    <li><strong>Pannel UserName Password </strong> ပြန်ပေးချင်ရင် <code>7</code> ဟုရိုက်ပြီး Enter နှိပ်ပါ။</li>
                 </ul>
             </div>
 
@@ -439,19 +553,19 @@
                     Panel ၏ ဘယ်ဘက် ဘေးဘား (Left Sidebar) ရှိ "Inbounds" ဆိုသည့်နေရာကို နှိပ်ပါ။
                 </p>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                    <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Basics Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Basics Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Remark:</strong> VLESS-HTTPUPGRADE (မိမိမှတ်မိမည့်အမည် ပေးနိုင်ပါသည်)</li>
                         <li><strong>Protocol:</strong> vless ကို ရွေးပါ။</li>
-                        <li><strong>Port:</strong> 8080 ဟု ရိုက်ထည့်ပါ။</li>
+                        <li><strong>Port:</strong> <code>8080</code> ဟု ရိုက်ထည့်ပါ။</li>
                         <li><strong>Total Flow (GB):</strong> ဗလာ (ဘာမှမထည့်ဘဲ) ထားလိုက်ပါ။</li>
                         <li><strong>Expiry Date:</strong> ဗလာ ထားလိုက်ပါ။</li>
                     </ul>
                 </div>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Stream Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-purple); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Stream Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Transmission:</strong> ပုံထဲမှာ RAW ဖြစ်နေပါတယ်။ အဲဒါကို နှိပ်ပြီး httpupgrade ကို ရွေးချယ်ပေးပါ။</li>
                         <li><strong>Path:</strong> httpupgrade ကို ရွေးလိုက်တာနဲ့ Path ဆိုတဲ့ ကွက်လပ်အသစ် ပေါ်လာပါလိမ့်မယ်။ အဲဒီနေရာမှာ <code>/xray</code> ဟု ရိုက်ထည့်ပေးပါ။ (အစက မျဉ်းစောင်းလေး / ပါဖို့ အရေးကြီးပါတယ်)</li>
@@ -460,25 +574,25 @@
                 </div>
             </div>
 
-            <div class="section" id="sec-5">
+            <div class="section" id="sec-6">
                 <div class="section-header"><h2>(၆) Panel Setting ပြင်ဆင်ခြင်း (Outline)</h2></div>
                 <p style="color: var(--text-muted); margin-bottom: 20px;">
                     Panel ၏ ဘယ်ဘက် ဘေးဘား (Left Sidebar) ရှိ "Inbounds" ဆိုသည့်နေရာကို နှိပ်ပါ။
                 </p>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                    <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Basics Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Basics Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Remark:</strong> Outline (မိမိမှတ်မိမည့်အမည် ပေးနိုင်ပါသည်)</li>
                         <li><strong>Protocol:</strong> shadowsocks ကို ရွေးပါ။</li>
-                        <li><strong>Port:</strong> 41234 (လုံခြုံရေးအတွက် 30000 နဲ့ 50000 ကြားက Port တစ်ခုကို သုံးထားတာပါ။)</li>
+                        <li><strong>Port:</strong> <code>41234</code> (လုံခြုံရေးအတွက် 30000 နဲ့ 50000 ကြားက Port တစ်ခုကို သုံးထားတာပါ။)</li>
                         <li><strong>Total Flow (GB):</strong> ဗလာ (ဘာမှမထည့်ဘဲ) ထားလိုက်ပါ။</li>
                         <li><strong>Expiry Date:</strong> ဗလာ ထားလိုက်ပါ။</li>
                     </ul>
                 </div>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Stream Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-purple); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Stream Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Transmission:</strong> RAW (raw ပဲထားပေးပါ)</li>
                         <li><strong>Proxy Protocol:</strong>  အားလုံးကို ပိတ် (Disable / Off) ထားပါ။</li>
@@ -486,15 +600,15 @@
                     </ul>
                 </div>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Security Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-orange); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-lock"></i> Security Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Security:</strong> None ကိုပဲ ရွေးထားပါ။ (Shadowsocks က သူ့ဘာသာ Encryption လုပ်ပြီးသားဖြစ်လို့ သီးသန့် TLS/Reality တွေ ထပ်ခံစရာ မလိုပါဘူး။) </li>
                     </ul>
                 </div>
 
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 15px;"><i class="fas fa-network-wired"></i> Sniffing Tab တွင် ပြင်ရန်</h3>
+                <div class="glass-panel">
+                    <h3 style="color: var(--accent-green); font-size: 1.15rem; margin-bottom: 15px;"><i class="fas fa-search"></i> Sniffing Tab တွင် ပြင်ရန်</h3>
                     <ul class="step-list">
                         <li><strong>Enabled:</strong> ဖွင့် (On/Enable) လိုက်ပါ။</li>
                     </ul>
